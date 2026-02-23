@@ -1,1 +1,36 @@
-{\n  \"name\": \"de-school-closings\",\n  \"version\": \"1.0.0\",\n  \"description\": \"A project that provides information on school closings due to weather or other conditions.\",\n  \"main\": \"index.js\",\n  \"scripts\": {\n    \"start\": \"node index.js\",\n    \"test\": \"echo 'Error: no test specified' && exit 1\"\n  },\n  \"dependencies\": {\n    \"express\": \"^4.17.1\"\n  }\n}
+{
+  "name": "de-school-closings",
+  "version": "1.0.0",
+  "description": "Delaware school closings map visualization",
+  "main": "fetchClosings.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "scrape": "node fetchClosings.js",
+    "server": "node server.js",
+    "prod": "NODE_ENV=production node server.js"
+  },
+  "proxy": "http://localhost:3001",
+  "dependencies": {
+    "axios": "^1.4.0",
+    "cheerio": "^1.0.0-rc.12",
+    "express": "^4.22.1",
+    "leaflet": "^1.9.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-leaflet": "^4.2.1",
+    "react-scripts": "5.0.1"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
