@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useMemo, useState, useEffect } from 'react';
+import React, { useRef, useCallback, useMemo, useState, useEffect, forwardRef, useImperativeHandle } from 'react';
 import { MapContainer, TileLayer, GeoJSON, Marker, Tooltip, useMap } from 'react-leaflet';
 import L from 'leaflet';
 
@@ -128,6 +128,13 @@ function PaneSetup() {
   return null;
 }
 
+// ── Helper: expose map instance to parent via ref ────────────────────
+function MapBridge({ mapRef }) {
+  const map = useMap();
+  useEffect(() => { mapRef.current = map; }, [map, mapRef]);
+  return null;
+}
+
 // ── Helper: draw VoTech boundary on hover ────────────────────────────
 function VotechBoundaryOverlay({ votechDistricts, hoveredVotech, closingsByVotech }) {
   const map = useMap();
@@ -175,16 +182,25 @@ function VotechBoundaryOverlay({ votechDistricts, hoveredVotech, closingsByVotec
 }
 
 // ── Main Component ───────────────────────────────────────────────────
-const SchoolClosingsMap = ({
+const SchoolClosingsMap = forwardRef(({
   districts,
   closingsByDistrict,
   votechDistricts,
   closingsByVotech,
   charterSchools,
   closingsByCharter,
-}) => {
+}, ref) => {
   const geoJsonRef = useRef(null);
+  const internalMapRef = useRef(null);
   const [hoveredVotech, setHoveredVotech] = useState(null);
+
+  useImperativeHandle(ref, () => ({
+    flyTo(lat, lng, zoom = 13) {
+      if (internalMapRef.current) {
+        internalMapRef.current.flyTo([lat, lng], zoom, { duration: 1.2 });
+      }
+    },
+  }));
 
   // ── Traditional Districts ──────────────────────────────────────────
   const styleDistrict = useCallback((feature) => {
@@ -264,10 +280,11 @@ const SchoolClosingsMap = ({
       maxZoom={13}
       maxBounds={delawareBounds}
       maxBoundsViscosity={0.9}
-      style={{ height: 'calc(100vh - 52px)', width: '100%' }}
+      style={{ height: '100%', width: '100%' }}
       zoomControl={true}
     >
       <PaneSetup />
+      <MapBridge mapRef={internalMapRef} />
       <VotechBoundaryOverlay
         votechDistricts={votechDistricts}
         hoveredVotech={hoveredVotech}
@@ -336,6 +353,8 @@ const SchoolClosingsMap = ({
       })}
     </MapContainer>
   );
-};
+});
+
+SchoolClosingsMap.displayName = 'SchoolClosingsMap';
 
 export default SchoolClosingsMap;

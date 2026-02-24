@@ -259,3 +259,253 @@ body, html, #root {
   border: 1px solid #30363d !important;
   box-shadow: 0 2px 8px rgba(0,0,0,0.4) !important;
 }
+
+/* Remove focus outline on district polygons when clicked */
+.leaflet-interactive:focus {
+  outline: none !important;
+}
+
+/* ─── Title variants (responsive) ────────────────────────────────── */
+.title-short { display: none; }
+.title-full  { display: inline; }
+
+/* ─── Legend toggle (mobile only — hidden on desktop) ────────────── */
+.legend-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: #c9d1d9;
+  cursor: pointer;
+  padding: 6px;
+}
+.legend-toggle:hover { color: #e6edf3; }
+
+/* ─── Search Bar ─────────────────────────────────────────────────── */
+.search-bar {
+  position: relative;
+  flex: 1;
+  max-width: 360px;
+  min-width: 180px;
+}
+
+.search-input-wrapper {
+  display: flex;
+  align-items: center;
+  background: #0d1117;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  padding: 0 10px;
+  height: 32px;
+  transition: border-color 0.15s;
+}
+
+.search-input-wrapper:focus-within {
+  border-color: #58a6ff;
+  box-shadow: 0 0 0 2px rgba(88, 166, 255, 0.3);
+}
+
+.search-icon {
+  color: #7d8590;
+  flex-shrink: 0;
+  margin-right: 8px;
+}
+
+.search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #e6edf3;
+  font-size: 13px;
+  font-family: inherit;
+  min-width: 0;
+}
+
+.search-input::placeholder {
+  color: #484f58;
+}
+
+.search-clear {
+  background: none;
+  border: none;
+  color: #7d8590;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  border-radius: 3px;
+}
+
+.search-clear:hover {
+  color: #e6edf3;
+  background: #21262d;
+}
+
+/* Dropdown */
+.search-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 8px;
+  max-height: 320px;
+  overflow-y: auto;
+  z-index: 2000;
+  list-style: none;
+  padding: 4px 0;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.search-option {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(48, 54, 61, 0.5);
+}
+
+.search-option:last-child { border-bottom: none; }
+
+.search-option-active,
+.search-option:hover {
+  background: #21262d;
+}
+
+.search-option-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #e6edf3;
+}
+
+.search-option-meta {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.search-type-badge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.search-type-district { background: rgba(88, 166, 255, 0.15); color: #58a6ff; }
+.search-type-votech   { background: rgba(210, 153, 34, 0.15); color: #d29922; }
+.search-type-charter  { background: rgba(163, 113, 247, 0.15); color: #a371f7; }
+
+.search-status {
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.search-status-closed           { color: #ef4444; }
+.search-status-delay            { color: #f59e0b; }
+.search-status-early-dismissal  { color: #f97316; }
+.search-status-info             { color: #3b82f6; }
+.search-status-open             { color: #3fb950; }
+
+.search-no-results {
+  padding: 16px;
+  text-align: center;
+  color: #7d8590;
+  font-size: 13px;
+}
+
+/* ─── Mobile (≤640px) ────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .header {
+    height: auto;
+    min-height: 48px;
+    flex-wrap: wrap;
+    padding: 8px 12px;
+    gap: 8px;
+  }
+
+  .title-full  { display: none; }
+  .title-short { display: inline; }
+  .header-title { font-size: 14px; }
+
+  /* Search bar: full width, second row */
+  .search-bar {
+    order: 3;
+    max-width: none;
+    width: 100%;
+    flex-basis: 100%;
+  }
+
+  .search-input-wrapper { height: 40px; }
+  .search-input { font-size: 16px; } /* prevents iOS zoom on focus */
+
+  .search-dropdown { max-height: 50vh; }
+  .search-option { padding: 10px 12px; min-height: 44px; }
+
+  .header-right { gap: 6px; }
+  .header-badges { gap: 4px; }
+  .badge { font-size: 10px; padding: 2px 7px; }
+  .last-updated { font-size: 10px; }
+
+  /* Legend: collapsed behind toggle */
+  .legend {
+    padding: 0;
+    min-width: auto;
+    background: transparent;
+    border: none;
+    backdrop-filter: none;
+    pointer-events: auto;
+  }
+
+  .legend-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: rgba(22, 27, 34, 0.92);
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    backdrop-filter: blur(6px);
+  }
+
+  .legend-content { display: none; }
+
+  .legend-open {
+    background: rgba(22, 27, 34, 0.92);
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 10px 14px;
+    backdrop-filter: blur(6px);
+  }
+
+  .legend-open .legend-content {
+    display: block;
+    margin-top: 8px;
+  }
+
+  .legend-open .legend-toggle {
+    width: auto;
+    height: auto;
+    border: none;
+    background: none;
+    justify-content: flex-end;
+  }
+
+  /* Map fills remaining space */
+  .leaflet-container { height: 100% !important; }
+
+  .no-closings-overlay { padding: 16px 20px; }
+  .no-closings-overlay h2 { font-size: 15px; }
+  .no-closings-overlay p { font-size: 12px; }
+}
+
+/* ─── Tablet (641–1024px) ────────────────────────────────────────── */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .search-bar { max-width: 280px; }
+  .badge { font-size: 10px; padding: 2px 8px; }
+  .legend { padding: 8px 12px; }
+}
